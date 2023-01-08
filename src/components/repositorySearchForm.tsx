@@ -1,15 +1,21 @@
 import { useState } from "react";
 
 type Params = {
-  callbackFunction: (username: string) => Promise<void>;
+  searchUserFunction: (username: string) => Promise<void>;
+  searchIdFunction: (id: string) => void;
 };
 
-export function RepositorySearchForm({ callbackFunction }: Params) {
+export function RepositorySearchForm({
+  searchUserFunction,
+  searchIdFunction,
+}: Params) {
   const [username, setUsername] = useState<string>("");
+  const [id, setId] = useState<string>("");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    callbackFunction(username);
+    searchIdFunction(id);
+    searchUserFunction(username);
   }
 
   return (
@@ -19,6 +25,12 @@ export function RepositorySearchForm({ callbackFunction }: Params) {
         type="text"
         name="username"
         onChange={(event) => setUsername(event.target.value)}
+      />
+      <label htmlFor="Id">ID (optional)</label>
+      <input
+        type="text"
+        name="Id"
+        onChange={(event) => setId(event.target.value)}
       />
       <button type="submit">Search</button>
     </form>
